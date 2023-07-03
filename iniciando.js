@@ -1,4 +1,4 @@
-
+//Apenas Criando 4 times e gerando resultados aleatórios  
 let times = ['Palmeiras', 'Vasco', 'Guarani', 'Criciuma'];
 let gols = Math.floor(Math.random() * 165 + 1);
 let a, b,c,d;
