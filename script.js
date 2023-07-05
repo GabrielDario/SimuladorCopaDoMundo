@@ -24,19 +24,22 @@ const gerarRodada = () => {
   timesCopia = timesCopia.filter(item => item != timeA);
   if (rodadas == 0) {
     timeB = timesCopia[Math.floor(Math.random() * 3)];
+    timesCopia = timesCopia.filter(item => item != timeB);
+
+    timeC = timesCopia[Math.floor(Math.random() * 2)];
+    timesCopia = timesCopia.filter(item => item != timeC);
+
+    timeD = timesCopia[Math.floor(Math.random() * 1)];
+    timesCopia = timesCopia.filter(item => item != timeD);
+
+    formarRodadaTimes.push(timeA, timeB, timeC, timeD);
+    juntarTimesRodada.push(timeA + timeB, timeC + timeD)
   }
 
   verificarRodadaRepetida(timesCopia);
-  console.log(timeB)
-
-  timeC = timesCopia[Math.floor(Math.random() * 2)];
-  timesCopia = timesCopia.filter(item => item != timeC);
-
-  timeD = timesCopia[Math.floor(Math.random() * 1)];
-  timesCopia = timesCopia.filter(item => item != timeD);
-
-  formarRodadaTimes.push(timeA, timeB, timeC, timeD);
-  juntarTimesRodada.push(timeA + timeB, timeC + timeD)
+  console.log('saida');
+  console.log(timesCopia);
+ 
 
 }
 
@@ -67,24 +70,35 @@ const gerarGols = (gols) => {
 }
 
 let verificarRodadaRepetida = (timesCopia) => {
-
+  //#PAROU AQUI SEGUNDA RODADA REPETINDO 2 E 4...
   if (rodadas == 0) {
   } else if (rodadas == 1) {
     let timeAx = formarRodadaTimes.indexOf(timeA);
     if (timeAx == 0) {
+      timeB = timesCopia[Math.floor(Math.random() * 2)]
       timesCopia = timesCopia.filter(item => item != formarRodadaTimes[1]);
-      timeB = timesCopia[Math.floor(Math.random() * 2)]
     } else if (timeAx == 1) {
+      console.log('1')
+      timeB = timesCopia[Math.floor(Math.random() * 2)]
       timesCopia = timesCopia.filter(item => item != formarRodadaTimes[0]);
-      timeB = timesCopia[Math.floor(Math.random() * 2)]
-    } else if (timeAx == 2) {
-      timesCopia = timesCopia.filter(item => item != formarRodadaTimes[3]);
-      timeB = timesCopia[Math.floor(Math.random() * 2)]
-    } else if (timeAx == 3) {
-      timesCopia = timesCopia.filter(item => item != formarRodadaTimes[2]);
-      timeB = timesCopia[Math.floor(Math.random() * 2)]
-    }
 
+      timeC = timesCopia[Math.floor(Math.random() * 2)];
+      timesCopia = timesCopia.filter(item => item != timeC);
+
+      timeD = timesCopia[Math.floor(Math.random() * 1)];
+      timesCopia = timesCopia.filter(item => item != timeD);
+
+      formarRodadaTimes.push(timeA, timeB, timeC, timeD);
+      juntarTimesRodada.push(timeA + timeB, timeC + timeD);
+    } else if (timeAx == 2) {
+      timeB = timesCopia[Math.floor(Math.random() * 2)]
+      timesCopia = timesCopia.filter(item => item != formarRodadaTimes[3]);
+    } else if (timeAx == 3) {
+      timeB = timesCopia[Math.floor(Math.random() * 2)]
+      timesCopia = timesCopia.filter(item => item != formarRodadaTimes[2]);
+    }
+    console.log('entrada');
+    console.log(timesCopia);
   } else if (rodadas == 2) {
     let timeAx = formarRodadaTimes.indexOf(timeA);
     console.log(timeA);
@@ -92,22 +106,20 @@ let verificarRodadaRepetida = (timesCopia) => {
     console.log(juntarTimesRodada)
 
 
-    let nomeRodada = timeA + timesCopia[0];
-    let nomeRodadaInverso = timesCopia[0] + timeA;
-    console.log(nomeRodada);
-    console.log(nomeRodadaInverso);
+    let i = 0;
+    let jaJogou;
+    let jaJogou2;
 
-    let jaJogou = juntarTimesRodada.indexOf(nomeRodada);
-    let jaJogou2 = juntarTimesRodada.indexOf(nomeRodadaInverso);
-    console.log(jaJogou, jaJogou2)
-    if (jaJogou == -1 && jaJogou2 == -1) {
-      console.log('Nao jogaram');
-    } else {
-      console.log('Ja jogaram');
-      let nomeRodada = timeA + timesCopia[1];
-      let nomeRodadaInverso = timesCopia[1] + timeA;
+    do {
+      let nomeRodada = timeA + timesCopia[i];
+      let nomeRodadaInverso = timesCopia[i] + timeA;
+      let jaJogou = juntarTimesRodada.indexOf(nomeRodada);
+      let jaJogou2 = juntarTimesRodada.indexOf(nomeRodadaInverso);
+
       timeB = timesCopia[1]
-    }
+
+      i++;
+    } while (jaJogou == -1 && jaJogou2 == -1);
 
   }
 
