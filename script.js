@@ -3,23 +3,48 @@ let next = document.getElementById("next");
 
 let timeA, timeB, timeC, timeD;
 let separarRodada = '---------------------'
-let times = ['Brasil', 'Argentina', 'França', 'Equador'];
+let times = [
+  { nome: 'Brasil', pontos: 0 ,golFeitos: 0, GolsSofridos: 0, saldoGols:0},
+  { nome: 'Argentina', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0 },
+  { nome: 'França', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0 },
+  { nome: 'Equador', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0}];
+let nTimes = times.length;
 let gols = Math.floor(Math.random() * 165 + 1);
 let rodadas = 0;
 let formarRodadaTimes = [];
 let juntarTimesRodada = [];
+
+
 next.addEventListener("click", e => {
-  gerarRodada();
-  span.innerText = span.innerText + Number(rodadas + 1) + 'º RODADA \n' +
-    separarRodada + '\n' +
-    timeA + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeB + '\n'
-    + timeC + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeD + '\n \n';
+  if (rodadas < 3) {
+    gerarRodada();
+    let gerandoTextoRodada = timeA + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeB + '\n'
+      + timeC + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeD + '\n \n';
+
+    verificandoResultados(gerandoTextoRodada);
+    span.innerText = span.innerText + Number(rodadas + 1) + 'º RODADA \n' +
+      separarRodada + '\n' + gerandoTextoRodada;
+  } else {
+    let orderGrupo = fazerTabela();
+    console.log(orderGrupo);
+    span.innerText = 'Lista de resultados\n' + separarRodada + '\n'
+      + 'Lugar.......Time.......Pontos\n';
+    for (let i = 0; i < orderGrupo.length; i++) {
+      console.log(i)
+      span.innerText = span.innerText + Number(i+1) + 'º .......' +  orderGrupo[i].nome
+        + ' .......' + orderGrupo[i].pontos + '\n';
+    }
+    
+  }
   rodadas++;
 })
 
 const gerarRodada = () => {
-  let timesCopia = times;
+  let timesCopia = [];
 
+  for (i = 0; i < nTimes; i++) {
+    timesCopia.push(times[i].nome);
+  }
   timeA = timesCopia[Math.floor(Math.random() * 4)];
   timesCopia = timesCopia.filter(item => item != timeA);
 
@@ -39,8 +64,6 @@ const gerarRodada = () => {
   }
 
   verificarRodadaRepetida(timesCopia);
-  console.log(juntarTimesRodada)
-
 }
 
 const gerarGols = (gols) => {
@@ -93,7 +116,7 @@ let verificarRodadaRepetida = (timesCopia) => {
 
       let jaJogou = juntarTimesRodada.indexOf(nomeRodada);
       let jaJogou2 = juntarTimesRodada.indexOf(nomeRodadaInverso);
-     
+
       if (jaJogou == -1 && jaJogou2 == -1) {
         verificando = true;
       }
@@ -108,8 +131,8 @@ let verificarRodadaRepetida = (timesCopia) => {
     timeD = timesCopia[0];
     formarRodadaTimes.push(timeA, timeB, timeC, timeD);
     juntarTimesRodada.push(timeA + timeB, timeC + timeD);
- 
-  }
+
+  } 
 
 }
 
@@ -124,4 +147,56 @@ let segundaRodada = (timesCopia, x) => {
   timeD = timesCopia[0];
   formarRodadaTimes.push(timeA, timeB, timeC, timeD);
   juntarTimesRodada.push(timeA + timeB, timeC + timeD);
+}
+
+const verificandoResultados = (gerandoTextoRodada) => {
+  let timesCopia = [];
+  for (i = 0; i < nTimes; i++) {
+    timesCopia.push(times[i].nome);
+  }
+  const gols = gerandoTextoRodada.match(/[0-9]/g);
+ 
+ 
+  if (gols[0] > gols[1]) {  //Primeiro Jogo
+    let posicao = timesCopia.indexOf(timeA)
+    times[posicao].pontos = times[posicao].pontos + 3;
+  } else if (gols[0] < gols[1]) {
+    let posicao = timesCopia.indexOf(timeB)
+    times[posicao].pontos = times[posicao].pontos + 3;
+  } else {
+    let posicaoA = timesCopia.indexOf(timeA)
+    let posicaoB = timesCopia.indexOf(timeB)
+    times[posicaoA].pontos = times[posicaoA].pontos + 1;
+    times[posicaoB].pontos = times[posicaoB].pontos + 1;
+  }
+
+  if (gols[2] > gols[3]) { //Segundo Jogo
+    let posicao = timesCopia.indexOf(timeC)
+    times[posicao].pontos = times[posicao].pontos + 3;
+  } else if (gols[2] < gols[3]) {
+    let posicao = timesCopia.indexOf(timeD)
+    times[posicao].pontos = times[posicao].pontos + 3;
+  } else {
+    let posicaoA = timesCopia.indexOf(timeC)
+    let posicaoB = timesCopia.indexOf(timeD)
+    times[posicaoA].pontos = times[posicaoA].pontos + 1;
+    times[posicaoB].pontos = times[posicaoB].pontos + 1;
+  }
+ 
+};
+
+
+let fazerTabela = () => {
+ let ordemGrupo = times;
+  ordemGrupo.sort(function (b, a) {
+    if (a.pontos > b.pontos) {
+      return 1;
+    }
+    if (a.pontos < b.pontos) {
+      return -1;
+    }
+    return 0;
+  });
+
+  return ordemGrupo;
 }
