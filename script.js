@@ -1,5 +1,26 @@
 let span = document.querySelector("span");
 let next = document.getElementById("next");
+let button = document.querySelector("button");
+
+
+let todosOsTimes = ['Qatar', 'Equador', 'Senegal', 'Holanda',
+  'Inglaterra', 'Estados Unidos', 'Irã', 'Gales',
+  'Argentina', 'Polonia', 'México', 'Arábia Saudita',
+  'França', 'Austrália', 'Tunísia', 'Dinamarca',
+  'Alemanha', 'Costa Rica', 'Espanha', 'Japão',
+  'Bélgica', 'Canada', 'Croácia', 'Marrocos',
+  'Brasil', 'Camarões', 'Sérvia', 'Suiça',
+  'Coréia do Sul', 'Gana', 'Portugal', 'Uruguai'];
+
+let grupoA = [];
+let grupoB = [];
+let grupoC = [];
+let grupoD = [];
+let grupoE = [];
+let grupoF = [];
+let grupoG = [];
+let grupoH = [];
+let tirandoTime = todosOsTimes.length;
 
 let timeA, timeB, timeC, timeD;
 let separarRodada = '---------------------'
@@ -13,6 +34,46 @@ let gols = Math.floor(Math.random() * 165 + 1);
 let rodadas = 0;
 let formarRodadaTimes = [];
 let juntarTimesRodada = [];
+
+button.addEventListener('click', e => {
+  fazerGrupos(grupoA);
+  fazerGrupos(grupoB);
+  fazerGrupos(grupoC);
+  fazerGrupos(grupoD);
+  fazerGrupos(grupoE);
+  fazerGrupos(grupoF);
+  fazerGrupos(grupoG);
+  fazerGrupos(grupoH);
+
+  console.log('grupoA:');
+  console.log(grupoA);
+  console.log('grupoB:');
+  console.log(grupoB);
+  console.log('grupoC:');
+  console.log(grupoC);
+  console.log('grupoD:');
+  console.log(grupoD);
+
+  console.log('grupoE:');
+  console.log(grupoE);
+  console.log('grupoF:');
+  console.log(grupoF);
+  console.log('grupoG:');
+  console.log(grupoG);
+  console.log('grupoH:');
+  console.log(grupoH);
+  console.log('Sobrou');
+  console.log(todosOsTimes);
+})
+
+const fazerGrupos = (grupo) => {
+  do {
+    let sortearNumber = Math.floor(Math.random() * tirandoTime);
+    grupo.push({ nome: todosOsTimes[sortearNumber], pontos: 0, saldoGols: 0 })
+    todosOsTimes = todosOsTimes.filter(item => item != todosOsTimes[sortearNumber]);
+    tirandoTime--
+  } while (grupo.length < 4);
+}
 
 
 next.addEventListener("click", e => {
