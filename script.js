@@ -4,10 +4,10 @@ let next = document.getElementById("next");
 let timeA, timeB, timeC, timeD;
 let separarRodada = '---------------------'
 let times = [
-  { nome: 'Brasil', pontos: 0 ,golFeitos: 0, GolsSofridos: 0, saldoGols:0},
-  { nome: 'Argentina', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0 },
-  { nome: 'França', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0 },
-  { nome: 'Equador', pontos: 0, golFeitos: 0, GolsSofridos: 0, saldoGols: 0}];
+  { nome: 'Brasil', pontos: 0,  saldoGols: 0 },
+  { nome: 'Argentina', pontos: 0, saldoGols: 0 },
+  { nome: 'França', pontos: 0, saldoGols: 0 },
+  { nome: 'Equador', pontos: 0,  saldoGols: 0 }];
 let nTimes = times.length;
 let gols = Math.floor(Math.random() * 165 + 1);
 let rodadas = 0;
@@ -28,13 +28,15 @@ next.addEventListener("click", e => {
     let orderGrupo = fazerTabela();
     console.log(orderGrupo);
     span.innerText = 'Lista de resultados\n' + separarRodada + '\n'
-      + 'Lugar.......Time.......Pontos\n';
+      + 'Lugar.......Time.......Pontos.......Saldo de gols\n';
     for (let i = 0; i < orderGrupo.length; i++) {
-      console.log(i)
-      span.innerText = span.innerText + Number(i+1) + 'º .......' +  orderGrupo[i].nome
-        + ' .......' + orderGrupo[i].pontos + '\n';
+      span.innerText = span.innerText + 
+      Number(i + 1) + 'º .......' + 
+      orderGrupo[i].nome + ' .......' + 
+        orderGrupo[i].pontos + ' ..............' + 
+        orderGrupo[i].saldoGols + '\n';
     }
-    
+
   }
   rodadas++;
 })
@@ -132,7 +134,7 @@ let verificarRodadaRepetida = (timesCopia) => {
     formarRodadaTimes.push(timeA, timeB, timeC, timeD);
     juntarTimesRodada.push(timeA + timeB, timeC + timeD);
 
-  } 
+  }
 
 }
 
@@ -155,39 +157,30 @@ const verificandoResultados = (gerandoTextoRodada) => {
     timesCopia.push(times[i].nome);
   }
   const gols = gerandoTextoRodada.match(/[0-9]/g);
- 
- 
+
+
   if (gols[0] > gols[1]) {  //Primeiro Jogo
-    let posicao = timesCopia.indexOf(timeA)
-    times[posicao].pontos = times[posicao].pontos + 3;
+    gerenciarPontosGols(timesCopia,timeA,timeB,gols[0],gols[1]);
   } else if (gols[0] < gols[1]) {
-    let posicao = timesCopia.indexOf(timeB)
-    times[posicao].pontos = times[posicao].pontos + 3;
-  } else {
-    let posicaoA = timesCopia.indexOf(timeA)
-    let posicaoB = timesCopia.indexOf(timeB)
-    times[posicaoA].pontos = times[posicaoA].pontos + 1;
-    times[posicaoB].pontos = times[posicaoB].pontos + 1;
+    gerenciarPontosGols(timesCopia, timeB, timeA, gols[1], gols[0]);
+  } else { // EMPATE PRIMEIRO JOGO
+    gerenciarPontosGols(timesCopia, timeA, timeB);
   }
 
   if (gols[2] > gols[3]) { //Segundo Jogo
-    let posicao = timesCopia.indexOf(timeC)
-    times[posicao].pontos = times[posicao].pontos + 3;
+    gerenciarPontosGols(timesCopia, timeC, timeD, gols[2], gols[3]);
   } else if (gols[2] < gols[3]) {
-    let posicao = timesCopia.indexOf(timeD)
-    times[posicao].pontos = times[posicao].pontos + 3;
-  } else {
-    let posicaoA = timesCopia.indexOf(timeC)
-    let posicaoB = timesCopia.indexOf(timeD)
-    times[posicaoA].pontos = times[posicaoA].pontos + 1;
-    times[posicaoB].pontos = times[posicaoB].pontos + 1;
+    gerenciarPontosGols(timesCopia, timeD ,timeC, gols[3], gols[2]);
+  } else {// EMPATE SEGUNDO JOGO
+    gerenciarPontosGols(timesCopia, timeC, timeD);
+  
   }
- 
+console.log(times)
 };
 
 
 let fazerTabela = () => {
- let ordemGrupo = times;
+  let ordemGrupo = times;
   ordemGrupo.sort(function (b, a) {
     if (a.pontos > b.pontos) {
       return 1;
@@ -197,6 +190,35 @@ let fazerTabela = () => {
     }
     return 0;
   });
+  for (i = 0; i < ordemGrupo.length - 1; i++) {
+    if (ordemGrupo[i].pontos == ordemGrupo[i + 1].pontos) {
+      if (ordemGrupo[i].saldoGols < ordemGrupo[i + 1].saldoGols) {
+        let copairObjeto = ordemGrupo[i + 1];
+        ordemGrupo[i + 1] = ordemGrupo[i];
+        ordemGrupo[i] = copairObjeto;
+      }
+    }
+  }
 
+  
   return ordemGrupo;
+}
+
+const gerenciarPontosGols = (timesCopia,primeiroTime,SegundoTime,golsPrimeiroTime,golsSegundoTime) => {
+
+  if (golsPrimeiroTime == golsSegundoTime) {
+    let posicaoA = timesCopia.indexOf(primeiroTime);
+    let posicaoB = timesCopia.indexOf(SegundoTime);
+
+    times[posicaoA].pontos = times[posicaoA].pontos + 1;
+    times[posicaoB].pontos = times[posicaoB].pontos + 1;
+  }else {
+  let posicao1 = timesCopia.indexOf(primeiroTime);
+  let posicao2 = timesCopia.indexOf(SegundoTime);
+
+  times[posicao1].pontos = times[posicao1].pontos + 3;
+
+  times[posicao1].saldoGols = times[posicao1].saldoGols + Number(golsPrimeiroTime - golsSegundoTime);
+  times[posicao2].saldoGols = times[posicao2].saldoGols + Number(golsSegundoTime - golsPrimeiroTime);
+  }
 }
