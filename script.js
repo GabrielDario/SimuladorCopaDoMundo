@@ -92,6 +92,7 @@ const jogarGrupo = (grupo) => {
     span.innerText = span.innerText + Number(avancandoRodada + 1) + 'º RODADA - Grupo 0' + (grupos + 1) + '\n' +
       separarRodada + '\n' + gerandoTextoRodada;
     grupos++;
+    console.log(grupos)
   } else {
     let orderGrupo = fazerTabela(grupo);
 
@@ -168,12 +169,13 @@ const gerarGols = (gols) => {
 let verificarRodadaRepetida = (timeA) => {
   if (avancandoRodada == 1) {
     let timesCopia = [];
-    //VERIFICAR RODADA ARRUMAR AQUI AAVANPADO
+    //VERIFICAR RODADA ARRUMAR AQUI AAVANPADO 
     for (i = 0; i < 4; i++) {
-      timesCopia.push(formarRodadaTimes[i + (avancandoRodada * 4)]);
+      timesCopia.push(formarRodadaTimes[i + (grupos * 4)]);
     }
 
     let timeAx = formarRodadaTimes.indexOf(timeA);
+    timeAx = timeAx - (grupos * 4);
     timesCopia = timesCopia.filter(item => item != timeA);
     
     if (timeAx == 0) {
@@ -221,7 +223,7 @@ let verificarRodadaRepetida = (timeA) => {
 let segundaRodada = (timesCopia, x) => {
   let salvandoTimeVoltar = timesCopia[x];
 
-  timesCopia = timesCopia.filter(item => item != timesCopia[x]); //tirando o repetido
+  timesCopia = timesCopia.filter(item => item != salvandoTimeVoltar); //tirando o repetido
 
   timeB = timesCopia[Math.floor(Math.random() * 2)]; // sorteia os dois times
   timesCopia = timesCopia.filter(item => item != timeB); //tiras
