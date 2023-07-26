@@ -75,11 +75,14 @@ next.addEventListener("click", e => {
   rodadas = 0;
   jogarGrupo(grupoB);
 
-  grupos = 0;
+  rodadas = 0;
+  jogarGrupo(grupoC);
+ 
   avancandoRodada++;
-  console.log(juntarTimesRodada)
-  console.log(grupoA)
-  console.log(grupoB)
+  console.log(grupoA);
+  console.log(grupoB);
+  console.log(grupoC);
+  grupos = 0;
 })
 
 const jogarGrupo = (grupo) => {
@@ -92,7 +95,7 @@ const jogarGrupo = (grupo) => {
     span.innerText = span.innerText + Number(avancandoRodada + 1) + 'º RODADA - Grupo 0' + (grupos + 1) + '\n' +
       separarRodada + '\n' + gerandoTextoRodada;
     grupos++;
-    console.log(grupos)
+
   } else {
     let orderGrupo = fazerTabela(grupo);
 
@@ -169,7 +172,7 @@ const gerarGols = (gols) => {
 let verificarRodadaRepetida = (timeA) => {
   if (avancandoRodada == 1) {
     let timesCopia = [];
-    //VERIFICAR RODADA ARRUMAR AQUI AAVANPADO 
+
     for (i = 0; i < 4; i++) {
       timesCopia.push(formarRodadaTimes[i + (grupos * 4)]);
     }
@@ -189,14 +192,17 @@ let verificarRodadaRepetida = (timeA) => {
     }
 
   } else if (avancandoRodada == 2) {
-
+    //VERIFICAR RODADA 3
     let i = 0;
 
     let verificando = false;
 
     while (verificando == false) {
-      let nomeRodada = timeA + timesCopia[i];
-      let nomeRodadaInverso = timesCopia[i] + timeA;
+      let nomeRodada = timeA + juntarTimesRodada[i];
+      nomeRodada = nomeRodada.slice(0 , - timeA.length);
+
+      let nomeRodadaInverso = juntarTimesRodada[i] + timeA;
+      nomeRodadaInverso = nomeRodadaInverso.slice(0 , - timeA.length);
 
       let jaJogou = juntarTimesRodada.indexOf(nomeRodada);
       let jaJogou2 = juntarTimesRodada.indexOf(nomeRodadaInverso);
