@@ -77,11 +77,29 @@ next.addEventListener("click", e => {
 
   rodadas = 0;
   jogarGrupo(grupoC);
- 
+
+  rodadas = 0;
+  jogarGrupo(grupoD);
+
+  rodadas = 0;
+  jogarGrupo(grupoE);
+
+  rodadas = 0;
+  jogarGrupo(grupoF);
+
+  rodadas = 0;
+  jogarGrupo(grupoG);
+
+  rodadas = 0;
+  jogarGrupo(grupoH);
+
+
+
   avancandoRodada++;
   console.log(grupoA);
   console.log(grupoB);
   console.log(grupoC);
+  console.log(grupoD);
   grupos = 0;
 })
 
@@ -140,7 +158,7 @@ const gerarRodada = (grupo) => {
 
   }
 
-  verificarRodadaRepetida(timeA);
+  verificarRodadaRepetida(timeA, grupo);
 }
 
 const gerarGols = (gols) => {
@@ -169,7 +187,7 @@ const gerarGols = (gols) => {
   return gols;
 }
 
-let verificarRodadaRepetida = (timeA) => {
+let verificarRodadaRepetida = (timeA, grupo) => {
   if (avancandoRodada == 1) {
     let timesCopia = [];
 
@@ -180,7 +198,7 @@ let verificarRodadaRepetida = (timeA) => {
     let timeAx = formarRodadaTimes.indexOf(timeA);
     timeAx = timeAx - (grupos * 4);
     timesCopia = timesCopia.filter(item => item != timeA);
-    
+
     if (timeAx == 0) {
       segundaRodada(timesCopia, 0);
     } else if (timeAx == 1) {
@@ -193,27 +211,31 @@ let verificarRodadaRepetida = (timeA) => {
 
   } else if (avancandoRodada == 2) {
     //VERIFICAR RODADA 3
-    let i = 0;
 
+    console.log(grupo);
+
+    let timesCopia = [];
+
+    for (let i = 0; i < 4; i++) {
+      timesCopia.push(formarRodadaTimes[i + (grupos * 4)]);
+    }
     let verificando = false;
 
+    let i = 0;
     while (verificando == false) {
-      let nomeRodada = timeA + juntarTimesRodada[i];
-      nomeRodada = nomeRodada.slice(0 , - timeA.length);
-
-      let nomeRodadaInverso = juntarTimesRodada[i] + timeA;
-      nomeRodadaInverso = nomeRodadaInverso.slice(0 , - timeA.length);
+      let nomeRodada = timeA + timesCopia[i];
+      let nomeRodadaInverso = timesCopia[i] + timeA;
 
       let jaJogou = juntarTimesRodada.indexOf(nomeRodada);
-      let jaJogou2 = juntarTimesRodada.indexOf(nomeRodadaInverso);
-
-      if (jaJogou == -1 && jaJogou2 == -1) {
+      let jaJogouInverso = juntarTimesRodada.indexOf(nomeRodadaInverso);
+      if (jaJogou == -1 && jaJogouInverso == -1 && timeA !== timesCopia[i]) {
         verificando = true;
       }
       timeB = timesCopia[i]
 
       i++;
     };
+    timesCopia = timesCopia.filter(item => item != timeA);
     timesCopia = timesCopia.filter(item => item != timeB);
 
     timeC = timesCopia[Math.floor(Math.random() * 2)];
