@@ -1,7 +1,6 @@
-let span = document.querySelector("span");
+let span = document.querySelectorAll("span");
 let next = document.getElementById("next");
 let button = document.querySelector("button");
-
 
 let todosOsTimes = ['Qatar', 'Equador', 'Senegal', 'Holanda',
   'Inglaterra', 'Estados Unidos', 'Irã', 'Gales',
@@ -25,7 +24,6 @@ let tirandoTime = todosOsTimes.length;
 let timeA, timeB, timeC, timeD;
 let separarRodada = '---------------------'
 
-let nTimes = 4;
 let gols = Math.floor(Math.random() * 165 + 1);
 let rodadas = 0;
 let avancandoRodada = 0;
@@ -110,7 +108,7 @@ const jogarGrupo = (grupo) => {
       + timeC + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeD + '\n \n';
 
     verificandoResultados(gerandoTextoRodada, grupo);
-    span.innerText = span.innerText + Number(avancandoRodada + 1) + 'º RODADA - Grupo 0' + (grupos + 1) + '\n' +
+    span[avancandoRodada].innerText = span[avancandoRodada].innerText  + '\nGrupo 0' + (grupos + 1) + '\n' +
       separarRodada + '\n' + gerandoTextoRodada;
     grupos++;
 
@@ -136,7 +134,7 @@ const gerarRodada = (grupo) => {
     grupo.pop();
   }
 
-  for (i = 0; i < nTimes; i++) {
+  for (i = 0; i < 4; i++) {
     timesCopia.push(grupo[i].nome);
   }
 
@@ -269,7 +267,7 @@ let segundaRodada = (timesCopia, x) => {
 const verificandoResultados = (gerandoTextoRodada, grupo) => {
 
   let timesCopia = [];
-  for (i = 0; i < nTimes; i++) {
+  for (i = 0; i < 4; i++) {
     timesCopia.push(grupo[i].nome);
   }
   const gols = gerandoTextoRodada.match(/[0-9]/g);

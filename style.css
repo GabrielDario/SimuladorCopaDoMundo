@@ -1,0 +1,11 @@
+li {
+    list-style: none;
+    display: inline-flex;
+    padding-left: 20px;
+    width: 200px;
+    background-color: red;
+  }
+  span {
+    background-color: blue;
+    
+  }
