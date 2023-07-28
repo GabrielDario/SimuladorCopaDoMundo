@@ -1,11 +1,15 @@
 li {
     list-style: none;
     display: inline-flex;
-    padding-left: 20px;
-    width: 200px;
-    background-color: red;
+    padding: 7px;
+    width: 310px;
+
   }
   span {
     background-color: blue;
     
   }
+
+  .tabelaGrupos span {
+    background-color: green;
+}

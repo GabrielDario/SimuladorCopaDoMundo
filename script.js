@@ -22,7 +22,7 @@ let grupoH = [];
 let tirandoTime = todosOsTimes.length;
 
 let timeA, timeB, timeC, timeD;
-let separarRodada = '---------------------'
+let separarRodada = '------------------------------------------'
 
 let gols = Math.floor(Math.random() * 165 + 1);
 let rodadas = 0;
@@ -92,16 +92,13 @@ next.addEventListener("click", e => {
   jogarGrupo(grupoH);
 
 
-
   avancandoRodada++;
-  console.log(grupoA);
-  console.log(grupoB);
-  console.log(grupoC);
-  console.log(grupoD);
+
   grupos = 0;
 })
 
 const jogarGrupo = (grupo) => {
+ 
   if (avancandoRodada < 3) {
     gerarRodada(grupo);
     let gerandoTextoRodada = timeA + ' ' + gerarGols(gols) + ' x ' + gerarGols(gols) + ' ' + timeB + '\n'
@@ -112,19 +109,38 @@ const jogarGrupo = (grupo) => {
       separarRodada + '\n' + gerandoTextoRodada;
     grupos++;
 
-  } else {
+  } else if(avancandoRodada < 12){
+    if(avancandoRodada == 3 ) {
+      grupos = 0;
+    }
+  
     let orderGrupo = fazerTabela(grupo);
 
-    span.innerText = 'Lista de resultados\n' + separarRodada + '\n'
+    span[avancandoRodada].innerText = 'Lista de resultados\nGrupo 0' + (grupos +1) + '\n' + separarRodada + '\n'
       + 'Lugar.......Time.......Pontos.......Saldo de gols\n';
     for (let i = 0; i < orderGrupo.length; i++) {
-      span.innerText = span.innerText +
+      span[avancandoRodada].innerText = span[avancandoRodada].innerText +
         Number(i + 1) + 'º .......' +
         orderGrupo[i].nome + ' .......' +
         orderGrupo[i].pontos + ' ..............' +
         orderGrupo[i].saldoGols + '\n';
     }
+    avancandoRodada++;
+    grupos++;
+  }else if(avancandoRodada == 12) {
+    avancandoRodada = 4;
+    console.log(avancandoRodada);
+
+    let juncaoGrupos = [grupoA,grupoB,grupoC,grupoD];
+    
+    for(i = 0; i < 15; i++) {
+      console.log(juncaoGrupos[i][i].nome)
+    }
+    console.log(juncaoGrupos)
   }
+
+
+
 }
 
 const gerarRodada = (grupo) => {
@@ -292,7 +308,7 @@ const verificandoResultados = (gerandoTextoRodada, grupo) => {
 };
 
 
-let fazerTabela = (grupo) => {
+const fazerTabela = (grupo) => {
   if (grupo.length > 4) {
     grupo.pop();
   }
