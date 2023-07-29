@@ -34,6 +34,8 @@ let grupos = 0;
 let formarRodadaTimes = [];
 let juntarTimesRodada = [];
 
+let timesClassificados = [];
+
 next.addEventListener("click", e => {
   if (grupoA.length == 0) {
     fazerGrupos(grupoA);
@@ -45,34 +47,42 @@ next.addEventListener("click", e => {
     fazerGrupos(grupoG);
     fazerGrupos(grupoH);
   }
-  rodadas = 0;
-  jogarGrupo(grupoA);
 
-  rodadas = 0;
-  jogarGrupo(grupoB);
-
-  rodadas = 0;
-  jogarGrupo(grupoC);
-
-  rodadas = 0;
-  jogarGrupo(grupoD);
-
-  rodadas = 0;
-  jogarGrupo(grupoE);
-
-  rodadas = 0;
-  jogarGrupo(grupoF);
-
-  rodadas = 0;
-  jogarGrupo(grupoG);
-
-  rodadas = 0;
-  jogarGrupo(grupoH);
-
-
-  avancandoRodada++;
-
-  grupos = 0;
+  if(avancandoRodada < 12) {
+    rodadas = 0;
+    jogarGrupo(grupoA);
+  
+    rodadas = 0;
+    jogarGrupo(grupoB);
+  
+    rodadas = 0;
+    jogarGrupo(grupoC);
+  
+    rodadas = 0;
+    jogarGrupo(grupoD);
+  
+    rodadas = 0;
+    jogarGrupo(grupoE);
+  
+    rodadas = 0;
+    jogarGrupo(grupoF);
+  
+    rodadas = 0;
+    jogarGrupo(grupoG);
+  
+    rodadas = 0;
+    jogarGrupo(grupoH);
+  
+  
+    avancandoRodada++;
+  
+    grupos = 0;
+  } else if(avancandoRodada == 12) {
+    let montarClassificacao = fazerFaseDeGrupos();
+    span[avancandoRodada-1].innerText = 'Fase de Grupos : \n' + separarRodada + '\n' +
+     montarClassificacao;
+  }
+  
 })
 
 

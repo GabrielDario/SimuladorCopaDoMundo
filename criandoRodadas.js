@@ -10,7 +10,7 @@ const jogarGrupo = (grupo) => {
             separarRodada + '\n' + gerandoTextoRodada;
         grupos++;
 
-    } else if (avancandoRodada < 12) {
+    } else if (avancandoRodada < 12 && avancandoRodada >= 3) {
         if (avancandoRodada == 3) {
             grupos = 0;
         }
@@ -28,15 +28,6 @@ const jogarGrupo = (grupo) => {
         }
         avancandoRodada++;
         grupos++;
-    } else if (avancandoRodada == 12) {
-        avancandoRodada = 4;
-        console.log(avancandoRodada);
-
-        let juncaoGrupos = [grupoA, grupoB, grupoC, grupoD];
-
-        entrarFuncaoo();
-
-        console.log(juncaoGrupos)
     }
 }
 
