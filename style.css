@@ -1,15 +1,25 @@
 li {
-    list-style: none;
-    display: inline-flex;
-    padding: 7px;
-    width: 310px;
+  list-style: none;
+  display: inline-flex;
+  padding: 7px;
+}
 
-  }
-  span {
-    background-color: blue;
-    
-  }
+span {
+  background-color: blue;
+}
 
-  .tabelaGrupos span {
-    background-color: green;
+.tabelaGrupos span {
+  background-color: green;
+}
+
+.tabelaEliminatorias span {
+  background-color: blue;
+}
+
+button {
+  position: fixed;
+}
+#campeao {
+  text-align: center;
+  background: blueviolet;
 }

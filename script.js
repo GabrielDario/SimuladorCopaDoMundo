@@ -2,9 +2,6 @@ let span = document.querySelectorAll("span");
 let next = document.getElementById("next");
 let button = document.querySelector("button");
 
-
-
-
 let todosOsTimes = ['Qatar', 'Equador', 'Senegal', 'Holanda',
   'Inglaterra', 'Estados Unidos', 'Irã', 'Gales',
   'Argentina', 'Polonia', 'México', 'Arábia Saudita',
@@ -14,6 +11,7 @@ let todosOsTimes = ['Qatar', 'Equador', 'Senegal', 'Holanda',
   'Brasil', 'Camarões', 'Sérvia', 'Suiça',
   'Coréia do Sul', 'Gana', 'Portugal', 'Uruguai'];
 
+  let campeao = document.getElementById("campeao");
 let grupoA = [];
 let grupoB = [];
 let grupoC = [];
@@ -79,8 +77,24 @@ next.addEventListener("click", e => {
     grupos = 0;
   } else if(avancandoRodada == 12) {
     let montarClassificacao = fazerFaseDeGrupos();
-    span[avancandoRodada-1].innerText = 'Fase de Grupos : \n' + separarRodada + '\n' +
+    span[avancandoRodada-1].innerText = 'Fase de Grupos - Oitavas de Finais : \n' + separarRodada + '\n' +
      montarClassificacao;
+     avancandoRodada++;
+  }else if(avancandoRodada == 13) {
+    let montarClassificacao = fazerFaseDeGrupos();
+    span[avancandoRodada+1].innerText = 'Fase de Grupos - Oitavas de Finais: \n' + separarRodada + '\n' +
+     montarClassificacao;
+     avancandoRodada++; 
+  }else if(avancandoRodada == 14) {
+    let montarClassificacao = fazerFaseDeGrupos();
+    span[avancandoRodada+2].innerText = 'Fase de Grupos - Semifinais: \n' + separarRodada + '\n' +
+     montarClassificacao;
+     avancandoRodada++; 
+  }else if(avancandoRodada == 15) {
+    let montarClassificacao = fazerFaseDeGrupos();
+    span[avancandoRodada+3].innerText = 'Fase de Grupos - FINAL: \n' + separarRodada + '\n' +
+     montarClassificacao;
+     campeao.innerText = classificados[0].nome + ' CAMPEÃO';
   }
   
 })
@@ -111,9 +125,6 @@ let verificarRodadaRepetida = (timeA, grupo) => {
 
   } else if (avancandoRodada == 2) {
     //VERIFICAR RODADA 3
-
-    console.log(grupo);
-
     let timesCopia = [];
 
     for (let i = 0; i < 4; i++) {
