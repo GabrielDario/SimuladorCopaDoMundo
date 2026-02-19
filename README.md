@@ -6,5 +6,5 @@ Sistema para simular Copa do Mundo
  - Classifica 2/4 times e grupos e monta o mata-mata (Quem fez mais pontos/saldo de gols)
  - Faz Oitavas de final/Quarta de finais/Semifinal e gera um campeão aleatório
 
- - Link para ver funcionando
+Link para ver funcionando : 
  -  https://simulador-copa-do-mundo-ap82zd328-gabrieldarios-projects.vercel.app/
